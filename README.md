@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vault Codex
+*Programmatic Obsidian*
 
-## Getting Started
+A primative yet modern self development machine. It is modular and adaptable, revolving around one core system:
+> Everything is a markdown page, with custom compoents that define it.
+Its like obsidian, but allows for more programmatic integration directly 
 
-First, run the development server:
+Components can do different things, such as be a button that executes a function, a forum to create a task, etc. The goal is to make fast and easy to automate self development through plugins. Each page on the site is a collection of components which can make the page be anything. From a to do list, to a workout plan, to a game to play. Each one has plugins of components.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Everything is navigated through a terminal, which is used to navigate and interract with the files within the vault. In the future there is also an option to just have a UI to do this, but a terminal sounds cool ok?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The terminal has the following commnads:
+ - `ls` - lists all the files in the current directory
+ - `cd` - changes the directory to the one the user is in
+ - `mkdir` - creates a folder in the current directory with a provided name
+ - `mkfile` - creates a markdown file for the user to edit
+ - `ed` - edits a provided file
+ - `cn` - changes a file or directories name
+ - `rm` - removes a file
+ - `rmdir` - removes a directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+ Components can add their own commands to the files the user is browsing.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+ Markdown rendering is as follows:
+ "---" - Marks a section for properties and is not rendered but can be read to access data
+ "#..." Denotes a heading type
+ "*" Denotes italicized text
+ "**" Denotes bold text
+ "***" Creates highlighted text
+ "[]" Can be used to link to another file to open when clicked
+ "{}" Can be used to insert a varaible from data
+ "<Component param={""}>" inserts a component defined in `components`
+ "-" Creates a bulleted list
+ "[x]" creates a checkbox
+ "```" Creates a code block
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ Components can add more special markdown rendering properties
