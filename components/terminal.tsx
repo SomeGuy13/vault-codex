@@ -20,19 +20,24 @@ export default function Terminal() {
     if (!inputValue.trim()) return;
 
     setHistory((history) => [...history, inputValue]);
-    setInputValue("")
+    setInputValue("");
 
     let command_entry: string[] = inputValue.split(" ");
     let command_name: string = command_entry[0];
     let command_args: string[] = command_entry.length > 1 ? command_entry.slice(1) : [];
 
+    if (command_name == "clear") {
+      setHistory([]);
+      return
+    }
+
     let result: Output = await runCommand(command_entry[0], command_args, ctx);
-    setHistory((history) => [...history, ">> " + result.output]) 
+    setHistory((history) => [...history, ">> " + result.output]);
   }
 
   return (
     <div>
-      <div>f 
+      <div>
         {history.map((entry, index) => (
             <li key={index}>{entry}</li>
         ))}
