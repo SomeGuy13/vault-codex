@@ -19,7 +19,7 @@ export default function Terminal() {
 
     if (!inputValue.trim()) return;
 
-    setHistory((history) => [...history, inputValue]);
+    setHistory((history) => [...history, ">>" + inputValue]);
     setInputValue("");
 
     let command_entry: string[] = inputValue.split(" ");
@@ -32,7 +32,7 @@ export default function Terminal() {
     }
 
     let result: Output = await runCommand(command_entry[0], command_args, ctx);
-    setHistory((history) => [...history, ">> " + result.output]);
+    setHistory((history) => [...history, result.output]);
   }
 
   return (
