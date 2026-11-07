@@ -1,11 +1,13 @@
 'server only';
 
-import fs from 'fs/promises'
-import path, { resolve } from 'path'
+import fs from 'fs/promises';
+import path, { resolve } from 'path';
 import { resolveSafe, validName } from './file-system';
 
 export type Ctx = { cwd: string };
-export type Output = { output?: string; cwd?: string; refresh?: boolean; edit?: string };
+export type Output = { output: string; cwd?: string; refresh?: boolean; edit?: string };
+
+const join = (cwd: string, p: string) => path.posix.join(cwd, p);
 
 export const commands = {
   // Prints the first argument
@@ -17,9 +19,11 @@ export const commands = {
   },
   // Changes the current working directory
   cd: {
-    run: (ctx: Ctx, args: string[]): Output => {
-      let result: Output = { output: "" };
-      return result;
+    async run(ctx: Ctx, [target = '/']: string[]): Promise<Output> {
+      const next = target.startsWith('/') ? target : join(ctx.cwd, target)
+      const stat = await fs.stat(resolveSafe(next));
+      if (!stat.isDirectory()) throw new Error('not a directory')
+      return { output: next,  cwd: path.posix.normalize(next) }
     }
   },
   // Creates a new directory

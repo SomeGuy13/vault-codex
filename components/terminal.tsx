@@ -4,6 +4,7 @@ import { useState } from "react";
 import { runCommand } from "@/app/actions";
 import type { ChangeEvent } from "react";
 import type { Ctx, Output } from "@/lib/registry";
+import { Underdog } from "next/font/google";
 
 export default function Terminal() {
   const [inputValue, setInputValue] = useState<string>("");
@@ -19,7 +20,7 @@ export default function Terminal() {
 
     if (!inputValue.trim()) return;
 
-    setHistory((history) => [...history, ">>" + inputValue]);
+    setHistory((history) => [...history, ">> " + inputValue]);
     setInputValue("");
 
     let command_entry: string[] = inputValue.split(" ");
@@ -32,11 +33,16 @@ export default function Terminal() {
     }
 
     let result: Output = await runCommand(command_entry[0], command_args, ctx);
+
+    if (result.cwd != undefined && result.cwd != ctx.cwd) {
+      setCtx({ cwd: result.cwd })
+    }
+
     setHistory((history) => [...history, result.output]);
   }
 
   return (
-    <div>
+    <div style={{ fontFamily: 'monospace' }}>
       <div>
         {history.map((entry, index) => (
             <li key={index}>{entry}</li>
