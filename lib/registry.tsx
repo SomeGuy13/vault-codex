@@ -70,10 +70,17 @@ export const commands = {
       return result;
     }
   },
-  // Opens the editor of a file
+  // Opens the file
   open: {
     run: (ctx: Ctx, args: string[]): Output => {
       let result: Output = { output: "" };
+      return result;
+    }
+  },
+  // Prints the current working directory
+  cwd: {
+    run: (ctx: Ctx, args: string[]): Output => {
+      let result: Output = { output: ctx.cwd };
       return result;
     }
   },
