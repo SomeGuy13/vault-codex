@@ -42,14 +42,19 @@ export default function Terminal() {
   }
 
   return (
-    <div style={{ fontFamily: 'monospace' }}>
+    <div style={{ fontFamily: 'monospace', color: 'red' }}>
       <div>
         {history.map((entry, index) => (
             <li key={index}>{entry}</li>
         ))}
       </div>
       <form onSubmit={handleSubmit}>
-        <input value={inputValue} onChange={handleChange} />
+        <input 
+          value={inputValue} 
+          onChange={handleChange}
+          className="outline-none focus:outline-none [caret-shape:block]"
+          type="text"
+        />
       </form>
     </div>
   );
