@@ -56,13 +56,22 @@ export const commands = {
   },
   // Creates a file
   mkfile: {
-    run: (ctx: Ctx, args: string[]): Output => {
-      let result: Output = { output: "" };
+    async run(ctx: Ctx, args: string[]): Promise<Output> {
+      if (args.length > 0) {
+        const name = validName(args[0])
+        const path = resolveSafe(ctx.cwd + args[0])
+        await fs.open(path + ".md", "w")
+
+        let result: Output = { output: "file created: " + args[0] };
+        return result;
+      }
+
+      let result: Output = { output: "error: file not removed" };
       return result;
     }
   },
   // Opens the editor of a file
-  ed: {
+  open: {
     run: (ctx: Ctx, args: string[]): Output => {
       let result: Output = { output: "" };
       return result;
@@ -77,8 +86,17 @@ export const commands = {
   },
   // Removes a file
   rm: {
-    run: (ctx: Ctx, args: string[]): Output => {
-      let result: Output = { output: "" };
+    async run(ctx: Ctx, args: string[]): Promise<Output> {
+      if (args.length > 0) {
+        const name = validName(args[0])
+        const path = resolveSafe(ctx.cwd + args[0])
+        await fs.unlink(path + ".md")
+
+        let result: Output = { output: "removed: " + args[0] };
+        return result;
+      }
+
+      let result: Output = { output: "error: file not removed" };
       return result;
     }
   },
