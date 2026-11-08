@@ -14,7 +14,7 @@ The terminal has the following commnads:
  - `cd` - changes the directory to the one the user is in
  - `mkdir` - creates a folder in the current directory with a provided name
  - `mkfile` - creates a markdown file for the user to edit
- - `ed` - edits a provided file
+ - `open` - opens a provided file
  - `cn` - changes a file or directories name
  - `rm` - removes a file
  - `rmdir` - removes a directory
