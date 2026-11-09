@@ -3,10 +3,9 @@
 import fs from 'fs/promises';
 import path, { resolve } from 'path';
 import { resolveSafe, validName } from './file-system';
-import { create } from 'domain';
 
 export type Ctx = { cwd: string };
-export type Output = { output: string; cwd?: string; refresh?: boolean; edit?: string };
+export type Output = { output: string; cwd?: string; };
 
 const join = (cwd: string, p: string) => path.posix.join(cwd, p);
 
@@ -86,20 +85,31 @@ export const commands = {
   },
   // Changes the name of a file or directory
   cn: {
-    run: (ctx: Ctx, args: string[]): Output => {
-      let result: Output = { output: "" };
+    async run(ctx: Ctx, args: string[]): Promise<Output> {
+      if (args.length > 0) {
+        const name = validName(args[0])
+        const path = resolveSafe(ctx.cwd + name)
+        await fs.unlink(path + ".md")
+
+        let result: Output = { output: "removed: " + name };
+        return result;
+      }
+
+      let result: Output = { output: "error: file not removed" };
       return result;
     }
   },
   // Removes a file
   rm: {
     async run(ctx: Ctx, args: string[]): Promise<Output> {
-      if (args.length > 0) {
-        const name = validName(args[0])
-        const path = resolveSafe(ctx.cwd + args[0])
-        await fs.unlink(path + ".md")
+      if (args.length > 1) {
+        const fileName = validName(args[0])
+        const newName = validName(args[1])
+        const newPath = resolveSafe(ctx.cwd + fileName)
+        const oldPath = resolveSafe(ctx.cwd + newName)
+        await fs.rename(oldPath, newPath)
 
-        let result: Output = { output: "removed: " + args[0] };
+        let result: Output = { output: "renamed: " + newName };
         return result;
       }
 

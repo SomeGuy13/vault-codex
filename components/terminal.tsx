@@ -1,10 +1,9 @@
-'use client'
+'use client';
 
 import { useState } from "react";
 import { runCommand } from "@/app/actions";
 import type { ChangeEvent } from "react";
 import type { Ctx, Output } from "@/lib/registry";
-import { Underdog } from "next/font/google";
 
 export default function Terminal() {
   const [inputValue, setInputValue] = useState<string>("");
@@ -38,21 +37,22 @@ export default function Terminal() {
       setCtx({ cwd: result.cwd })
     }
 
-    setHistory((history) => [...history, result.output]);
+    setHistory((history) => [...history, result.output].slice(-2));
   }
 
   return (
-    <div style={{ fontFamily: 'monospace', color: 'red' }}>
-      <div>
+    <div 
+      className="fixed bottom-20 left-1/2 -translate-x-1/2 w-[25vw] min-w-0 overflow-auto border-3 border-red-700 p-3">
+      <ul className="list-none">
         {history.map((entry, index) => (
             <li key={index}>{entry}</li>
         ))}
-      </div>
+      </ul>
       <form onSubmit={handleSubmit}>
         <input 
           value={inputValue} 
           onChange={handleChange}
-          className="outline-none focus:outline-none [caret-shape:block]"
+          className="outline-none focus:outline-none [caret-shape:block] w-full"
           type="text"
         />
       </form>
