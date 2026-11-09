@@ -1,10 +1,16 @@
-import Terminal from "@/components/terminal";
+'use server';
 
-export default function Home() {
+import Renderer from "@/components/renderer";
+import Terminal from "@/components/terminal";
+import { Suspense } from "react";
+
+export default async function Home() {
   return (
     <div>
       <main>
-        <h1>Vault Codex</h1>
+        <Suspense>
+          <Renderer file="home.md"/>
+        </Suspense>
         <Terminal/>
       </main>
     </div>
