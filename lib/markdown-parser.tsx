@@ -25,10 +25,32 @@ export async function parseFile(file: string): Promise<JSX.Element> {
     }
 
     const headerRegex = /^#{1,6}/;
+    const ulRegex = /^([ ]*)-/;
+    const liRegex = /^([ ]*)\d\./;
+    const tableRegex = /^\|/;
+    const quoteRegex = /^>/;
+    const codeRegex = /^```/;
+    const linkRegex = /^\[\[.+\]\]?/;
 
     if (headerRegex.test(split_content[i])) {
       const count = split_content[i].match(headerRegex)?.[0].length ?? 0;
-      nodeType = "header " + count;
+      nodeType = "header_" + count;
+    } else if (liRegex.test(split_content[i])) {
+      const count = split_content[i].match(liRegex)?.[1].length ?? 0;
+      nodeType = "li_" + count;
+    } else if (tableRegex.test(split_content[i])) {
+      nodeType = "table";
+    } else if (quoteRegex.test(split_content[i])) {
+      nodeType = "quote";
+    } else if (codeRegex.test(split_content[i])) {
+      nodeType = "ml_code";
+    } else if (split_content[i] == "---") {
+      nodeType = "hr";
+    } else if (ulRegex.test(split_content[i])) {
+      const count = split_content[i].match(ulRegex)?.[1].length ?? 0;
+      nodeType = "ul_" + count;
+    } else if (linkRegex.test(split_content[i])) {
+      nodeType = "link"
     }
 
     nodeValue = split_content[i];
