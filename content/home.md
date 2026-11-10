@@ -7,7 +7,7 @@
 
 ## Text styles
 
-**Bold text** · *Italic text* · ***Bold and italic*** · ~~Strikethrough~~ · `inline code`
+**Bold text** · *Italic text* · ***Highlighted*** · ~~Strikethrough~~ · `inline code`
 
 ## Lists
 
